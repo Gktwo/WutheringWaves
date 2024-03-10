@@ -40,13 +40,13 @@ internal class ActivityController : Controller
         activityData = new ActivityData { BeginOpenTime = 0, BeginShowTime = 0, EndShowTime = Int32.MaxValue, Id = 100500001, IsFirstOpen = true, IsUnlock = true, Type = 5, WorldNewJourneyActivity = worldEnd };
         data.Add(activityData);
 
-        await Session.Push(MessageId.InstPlayDataNotify, new InstPlayDataNotify { Id = 995 });
+        await Session.Push(MessageId.InstPlayDataNotify, new InstPlayDataNotify { Id = 16000004 });//使用LevelPlayData  是副本信息通知
 
-        await Session.Push(MessageId.AddUnlockedGuideNotify, new AddUnlockedGuideNotify { UnlockedGuideIds = { 310000043, 310000041, 139000003 } });
+        await Session.Push(MessageId.AddUnlockedGuideNotify, new AddUnlockedGuideNotify { UnlockedGuideIds = { 13000010, 12980023, 12980015 } });//应该是GroupId，可能跟GuideInfoRequest有关？目前没啥效果，不知道是什么功能？
 
-        await Session.Push(MessageId.QuestReadyListNotify, new QuestReadyListNotify { QuestId = { 310000043, 310000041, 139000003, 10010001 } });
-        await Session.Push(MessageId.QuestListNotify, new QuestListNotify { Quests = { new QuestInfo { QuestId = 10010001, Status = 1 }, new QuestInfo { QuestId = 139000003, Status = 1 }, new QuestInfo { QuestId = 310000043, Status = 1 }, new QuestInfo { QuestId = 310000041, Status = 1 } } });
-        await Session.Push(MessageId.QuestShowListNotify, new QuestShowListNotify { QuestId = { 310000043, 310000041, 139000003, 10010001 } });
+        await Session.Push(MessageId.QuestReadyListNotify, new QuestReadyListNotify { QuestId = { 310000043, 310000041, 139000003} });//可接
+        await Session.Push(MessageId.QuestListNotify, new QuestListNotify { Quests = { new QuestInfo { QuestId = 139000003, Status = 1 }, new QuestInfo { QuestId = 310000043, Status = 1 }, new QuestInfo { QuestId = 310000041, Status = 1 } } });//进行中
+        await Session.Push(MessageId.QuestShowListNotify, new QuestShowListNotify { QuestId = { 310000043, 310000041, 139000003} });//提前显示
 
         return Response(MessageId.ActivityResponse, new ActivityResponse { Activities = { data } });
 
